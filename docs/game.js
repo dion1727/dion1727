@@ -1,94 +1,126 @@
-'use strict';
+"use strict";
 (() => {
-  const canvas = document.getElementById('board');
-  const ctx = canvas.getContext('2d');
-  const C = 23, R = 15, S = 30;
-  const $ = (id) => document.getElementById(id);
-  const scoreEl=$('score'), bestEl=$('best'), thirdEl=$('third'), statusEl=$('status');
-  const overlay=$('overlay'), title=$('overlay-title'), message=$('overlay-message');
-  const btnPause=$('pause'), btnStart=$('start'), btnSound=$('sound');
-  const btnQuest=$('mode-quest'), btnSnake=$('mode-snake');
+  const USER='dion1727';
+  const $=(id)=>document.getElementById(id);
+  const canvas=$('board'), ctx=canvas.getContext('2d');
+  const COLS=26, ROWS=7, STEP=25, BX=20, BY=125;
+  const snakeRows=15, snakeCols=23, unit=30;
   const dirs={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
-  let game='quest', state='ready', points=0, lives=3, best=0, sound=false;
-  let player={x:2,y:2}, direction=dirs.right, intended=dirs.right, snake=[], food={x:0,y:0}, enemies=[], tiles=[], stepCount=0;
-  let audioCtx=null, last=0, raf=0, rng=Math.random;
-  const speed={quest:125,snake:145};
-  const blocks=[];
-  for(let y=0;y<R;y++) for(let x=0;x<C;x++) if ((x%6===0&&y>2&&y<R-3&&y%5!==0)||(y===7&&x>4&&x<C-5&&x%7!==0)) blocks.push(`${x},${y}`);
-  const hasBlock=(x,y)=>blocks.includes(`${x},${y}`);
-  const inside=(x,y)=>x>=0&&y>=0&&x<C&&y<R;
-  const coord=(p)=>`${p.x},${p.y}`;
-  const randomOpen=(excluded=new Set())=>{
-    const possible=[];for(let y=0;y<R;y++)for(let x=0;x<C;x++)if(!hasBlock(x,y)&&!excluded.has(`${x},${y}`))possible.push({x,y});
-    return possible.length?possible[Math.floor(Math.random()*possible.length)]:{x:1,y:1};
-  };
-  function bestKey(){return 'dion-arcade-best-'+game}
-  function loadBest(){try{return Number(localStorage.getItem(bestKey())||0)}catch(e){return 0}}
-  function saveBest(){if(points>best){best=points;try{localStorage.setItem(bestKey(),String(best))}catch(e){}}}
-  function beep(hz=460){if(!sound)return;try{audioCtx??=new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=hz;g.gain.setValueAtTime(.07,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.09);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.1)}catch(e){}}
-  function hud(){scoreEl.textContent=String(points).padStart(4,'0');bestEl.textContent=String(best).padStart(4,'0');thirdEl.textContent=game==='quest'?String(lives):String(snake.length);statusEl.textContent=state.toUpperCase()}
-  function showOverlay(t,m,buttonText){title.textContent=t;message.textContent=m;$('overlay-start').textContent=buttonText;overlay.classList.remove('hidden')}
-  function setMode(newMode){game=newMode;btnQuest.classList.toggle('active',game==='quest');btnSnake.classList.toggle('active',game==='snake');btnQuest.setAttribute('aria-pressed',String(game==='quest'));btnSnake.setAttribute('aria-pressed',String(game==='snake'));$('third-label').textContent=game==='quest'?'LIVES':'LENGTH';$('how-title').textContent=game==='quest'?'Collect commits. Avoid bugs.':'Keep growing. Stay alive.';$('how-text').textContent=game==='quest'?'Move around the board and collect green commit tiles. Avoid red bugs. You have three lives.':'Eat the bright green tiles, grow longer, and avoid crashing into walls or yourself.';reset(false)}
-  function reset(start){points=0;lives=3;stepCount=0;best=loadBest();player={x:2,y:2};direction=dirs.right;intended=dirs.right;
-    snake=[{x:4,y:4},{x:3,y:4},{x:2,y:4}];const occupied=new Set(snake.map(coord));food=randomOpen(occupied);
-    tiles=[];enemies=[];
-    if(game==='quest'){
-      for(let i=0;i<26;i++){const p=randomOpen(new Set([coord(player),...tiles.map(coord)]));tiles.push(p)}
-      enemies=[{x:20,y:3},{x:19,y:12},{x:3,y:12}];
+  const allDirs=Object.values(dirs);
+  let mode='quest', phase='ready', score=0, best=0, lives=3, sound=false;
+  let days=[], board=new Map(), active=[], fetchedAt=null, source='not-synced', eventsCache=[];
+  let player={x:0,y:0},direction=dirs.right, queued=dirs.right, ghosts=[], stepNumber=0;
+  let snake=[], food={x:10,y:7}, ctxAudio=null, last=0;
+  const px=(p)=>`${p.x},${p.y}`;
+  const inQuest=(p)=>p.x>=0&&p.x<COLS&&p.y>=0&&p.y<ROWS;
+  const inSnake=(p)=>p.x>=0&&p.x<snakeCols&&p.y>=0&&p.y<snakeRows;
+  const rand=(n)=>Math.floor(Math.random()*n);
+  const dayKey=(date)=>date.slice(0,10);
+  const formatDate=(d)=>new Date(`${d}T12:00:00Z`).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
+  const prettyTime=(t)=>t?new Date(t).toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'}):'belum tersedia';
+  const bestKey=()=>`dion-real-arcade-${mode}`;
+  function soundFX(f=650){ if(!sound)return;try{ctxAudio ??= new (window.AudioContext||window.webkitAudioContext)();const o=ctxAudio.createOscillator(),g=ctxAudio.createGain();o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.035,ctxAudio.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ctxAudio.currentTime+.085);o.connect(g);g.connect(ctxAudio.destination);o.start();o.stop(ctxAudio.currentTime+.09);}catch{}}
+  function bestLoad(){try{return Number(localStorage.getItem(bestKey())||0)}catch{return 0}}
+  function bestUpdate(){if(score>best){best=score;try{localStorage.setItem(bestKey(),String(best))}catch{}}}
+  function hud(){ $('score').textContent=String(score).padStart(4,'0');$('best').textContent=String(best).padStart(4,'0');$('third').textContent=String(mode==='quest'?lives:snake.length);$('status').textContent=phase.toUpperCase() }
+  function overlay(title,detail,label='Start game ↗'){$('overlay-title').textContent=title;$('overlay-message').textContent=detail;$('overlay-start').textContent=label;$('overlay').classList.remove('hidden')}
+  function end(title,detail){phase='game over';bestUpdate();$('pause').disabled=true;overlay(title,detail,'Play again ↗');soundFX(240);hud()}
+  function setPhase(playing){phase=playing?'playing':'ready';$('pause').disabled=!playing;$('pause').textContent='Ⅱ Pause';$('overlay').classList.toggle('hidden',playing);last=0;hud()}
+  function liveStatus(message,at,src){$('data-status').textContent=message;$('data-updated').textContent=(src?src+' · ':'')+(at?'Updated '+prettyTime(at):'Waiting for sync')}
+  function normalize(raw){const items=Array.isArray(raw?.days)?raw.days:Array.isArray(raw?.contributions)?raw.contributions:[];return items.filter(p=>typeof p.date==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(p.date)&&Number.isFinite(Number(p.count)))
+    .map(p=>({date:p.date,count:Math.max(0,Math.trunc(Number(p.count))),level:Math.max(0,Number(p.level||0))}));}
+  async function loadCalendar(force=false){
+    liveStatus('Fetching real contribution calendar…',null,null);
+    const raw=`https://raw.githubusercontent.com/${USER}/${USER}/main/docs/data/contributions.json?v=${Math.floor(Date.now()/300000)}`;
+    for(const url of [raw, `./data/contributions.json?v=${Date.now()}`]){
+      try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)continue;const payload=await r.json();const arr=normalize(payload);
+        if(arr.length){days=arr;source='Full contribution calendar';fetchedAt=payload.fetched_at||null;
+          buildBoard();liveStatus(`${arr.filter(d=>d.count>0).length} active days from dion1727 · genuine GitHub counts`,fetchedAt,source);
+          if(phase!=='playing')reset(false);return;}
+      }catch(e){/* proceed to other sources */}
     }
-    state=start?'playing':'ready';btnPause.disabled=!start;btnPause.textContent='Ⅱ Pause';overlay.classList.toggle('hidden',start);
-    if(!start)showOverlay(game==='quest'?'Commit Quest':'Pixel Snake',game==='quest'?'Collect green commit tiles. Watch out for red bugs.':'Collect tiles to grow longer. Don\'t hit the walls or your tail.','Start game ↗');hud();draw();last=0;
+    // A public events fallback is honest, but NOT the full GitHub contribution calendar.
+    try{const ev=eventsCache.length?eventsCache:await fetchPublicEvents();const cnt=new Map();
+      for(const e of ev){const d=(e.created_at||'').slice(0,10);if(d)cnt.set(d,(cnt.get(d)||0)+1)}
+      if(cnt.size){days=[...cnt].map(([date,count])=>({date,count,level:Math.min(4,count)}));source='Recent public events (partial)';fetchedAt=new Date().toISOString();
+        buildBoard();liveStatus(`Showing ${cnt.size} days of public events, NOT the complete contribution calendar`,fetchedAt,source);if(phase!=='playing')reset(false);return;}
+    }catch(e){/* offline */}
+    days=[];source='Practice only';fetchedAt=null;buildBoard();liveStatus('Calendar unavailable. Practice mode uses clearly marked practice tiles.',null,'Practice');if(phase!=='playing')reset(false);
   }
-  function start(){reset(true);beep(660)}
-  function pause(){if(state==='playing'){state='paused';showOverlay('Paused','Take a break. Your score is safe.','Resume game ↗');btnPause.textContent='▶ Resume'}else if(state==='paused'){state='playing';overlay.classList.add('hidden');btnPause.textContent='Ⅱ Pause';last=0}hud()}
-  function end(t,m){state='game over';saveBest();showOverlay(t,m,'Play again ↗');btnPause.disabled=true;beep(210);hud()}
-  function move(d){if(!d)return;if(game==='snake'&&snake.length>1&&d.x===-direction.x&&d.y===-direction.y)return;intended=d;if(game==='quest')direction=d}
-  function tickQuest(){
-    const n={x:player.x+direction.x,y:player.y+direction.y};if(inside(n.x,n.y)&&!hasBlock(n.x,n.y))player=n;
-    const i=tiles.findIndex(t=>t.x===player.x&&t.y===player.y);
-    if(i!==-1){points+=10;saveBest();beep(660);tiles.splice(i,1);tiles.push(randomOpen(new Set([coord(player),...tiles.map(coord),...enemies.map(coord)])))}
-    if(stepCount%3===0)for(const b of enemies){
-      const choices=Object.values(dirs).map(d=>({x:b.x+d.x,y:b.y+d.y})).filter(p=>inside(p.x,p.y)&&!hasBlock(p.x,p.y));
-      if(choices.length){choices.sort((p,q)=>(Math.abs(p.x-player.x)+Math.abs(p.y-player.y))-(Math.abs(q.x-player.x)+Math.abs(q.y-player.y)));let pick=Math.random()<.65?choices[0]:choices[Math.floor(Math.random()*choices.length)];b.x=pick.x;b.y=pick.y;}
-    }
-    if(enemies.some(e=>e.x===player.x&&e.y===player.y)){
-      lives--;beep(250);player={x:2,y:2};direction=dirs.right;
-      if(lives<=0)end('Out of lives',`You scored ${points} points. Give it another go.`)
-    }
+  async function fetchPublicEvents(){const r=await fetch(`https://api.github.com/users/${USER}/events/public?per_page=100`,{headers:{Accept:'application/vnd.github+json'}});if(!r.ok)throw new Error(`API ${r.status}`);const a=await r.json();eventsCache=Array.isArray(a)?a:[];return eventsCache;}
+  async function loadActivity(){
+    try{const [pr,ev]=await Promise.all([fetch(`https://api.github.com/users/${USER}`,{headers:{Accept:'application/vnd.github+json'}}),fetchPublicEvents()]);
+      if(pr.ok){const d=await pr.json();$('public-repos').textContent=Number(d.public_repos||0).toLocaleString('id-ID');$('followers').textContent=Number(d.followers||0).toLocaleString('id-ID')}
+      const top=ev[0];$('recent-event').textContent=top?`${top.type.replace(/Event$/,'')} · ${(top.repo&&top.repo.name)||'GitHub'} · ${prettyTime(top.created_at)}. Public events refresh when you reopen the page.`:'No recent public events returned.';
+    }catch(e){$('recent-event').textContent='Public GitHub API temporarily unavailable. The games still work.'}
   }
-  function tickSnake(){
-    direction=intended;
-    const h=snake[0],n={x:h.x+direction.x,y:h.y+direction.y};
-    const eating=n.x===food.x&&n.y===food.y;
-    const body=eating?snake:snake.slice(0,-1);
-    if(!inside(n.x,n.y)||body.some(b=>b.x===n.x&&b.y===n.y))return end('Game over',`Your score: ${points}. One more run?`);
-    snake.unshift(n);if(eating){points+=10;saveBest();beep(710);food=randomOpen(new Set(snake.map(coord)));if(snake.length>=C*R-1)end('You win!','The board is yours.');}else snake.pop();
-  }
-  function round(x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke()}}
-  function draw(){
-    const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);
-    const grad=ctx.createLinearGradient(0,0,w,h);grad.addColorStop(0,'#0b2224');grad.addColorStop(1,'#071820');ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
-    for(let y=0;y<R;y++)for(let x=0;x<C;x++){
-      const z=((x*73+y*11)%19);round(x*S+3,y*S+3,S-6,S-6,5,z<3?'#1a4039':'#12312f');
-      if(game==='quest'&&hasBlock(x,y))round(x*S+3,y*S+3,S-6,S-6,5,'#28565a','#40716b');
+  function buildBoard(){
+    board=new Map();active=[];const now=new Date(),today=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()),dow=new Date(today).getUTCDay();const start=today-dow*86400000-(COLS-1)*7*86400000;
+    // Board is the latest 26 calendar weeks, left-to-right, Sunday to Saturday.
+    for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
+      const date=new Date(start+(x*7+y)*86400000).toISOString().slice(0,10);
+      board.set(`${x},${y}`,{x,y,date,count:0,future:(start+(x*7+y)*86400000)>today,level:0});
     }
-    if(game==='quest'){
-      for(const t of tiles){round(t.x*S+8,t.y*S+8,S-16,S-16,3,'#83eaa9');ctx.fillStyle='#c9ffda';ctx.fillRect(t.x*S+12,t.y*S+12,6,6)}
-      for(const b of enemies){round(b.x*S+5,b.y*S+5,S-10,S-10,6,'#f07578');ctx.fillStyle='#102228';ctx.fillRect(b.x*S+11,b.y*S+11,4,4);ctx.fillRect(b.x*S+19,b.y*S+11,4,4)}
-      round(player.x*S+4,player.y*S+4,S-8,S-8,6,'#ffba73');ctx.fillStyle='#132925';ctx.fillRect(player.x*S+10,player.y*S+11,4,4);ctx.fillRect(player.x*S+18,player.y*S+11,4,4)
+    for(const d of days){const dt=Date.parse(d.date+'T00:00:00Z'),col=Math.floor((dt-start)/(7*86400000)),row=new Date(dt).getUTCDay();if(col<0||col>=COLS||dt>today)continue;const target=board.get(`${col},${row}`);if(target){target.count=d.count;target.level=d.level}}
+    active=[...board.values()].filter(v=>v.count>0);
+    $('stats-title').textContent=source==='Full contribution calendar'?`${active.reduce((a,d)=>a+d.count,0)} contributions on this board`:source==='Recent public events (partial)'?`${active.reduce((a,d)=>a+d.count,0)} recent public events`:'Practice mode';
+  }
+  function practiceTiles(){const used=new Set();const list=[];for(let i=0;i<28;i++){let x=rand(COLS),y=rand(ROWS);while(used.has(`${x},${y}`)){x=rand(COLS);y=rand(ROWS)}used.add(`${x},${y}`);list.push({x,y,date:'Practice',count:1,level:1,practice:true})}return list;}
+  let tiles=[];
+  function randomStart(){return {x:1,y:3}}
+  function reset(start){
+    score=0;lives=3;stepNumber=0;best=bestLoad();player=randomStart();direction=dirs.right;queued=dirs.right;
+    tiles=(active.length?active:practiceTiles()).map(v=>({...v})).filter(t=>!(t.x===player.x&&t.y===player.y));
+    ghosts=[{x:20,y:1},{x:16,y:5}];snake=[{x:4,y:7},{x:3,y:7},{x:2,y:7}];placeFood();setPhase(start);
+    if(!start)overlay(mode==='quest'?'Commit Quest':'Pixel Snake',mode==='quest'?(source==='Full contribution calendar'?'Collect actual dion1727 contribution days. Tiles score their real GitHub counts.':source==='Recent public events (partial)'?'Playing recent real public events (partial calendar). Collect tiles and dodge bugs.':'Practice mode while GitHub data sync is unavailable.'):'Eat green pixels, grow longer, and avoid your own tail.');
+    draw();
+  }
+  function setMode(m){mode=m;$('mode-quest').classList.toggle('active',m==='quest');$('mode-snake').classList.toggle('active',m==='snake');$('mode-quest').setAttribute('aria-pressed',String(m==='quest'));$('mode-snake').setAttribute('aria-pressed',String(m==='snake'));
+    $('third-label').textContent=m==='quest'?'LIVES':'LENGTH';$('how-title').textContent=m==='quest'?'Real contributions become collectibles.':'Snake, but a little greener.';
+    $('how-text').textContent=m==='quest'?'Each green tile maps to a contribution day on dion1727. When the full calendar sync is available, your score increases by that date’s real count. Avoid the red bugs.':'Collect the bright tiles, grow, and avoid walls or your own tail.';
+    reset(false);
+  }
+  function pause(){if(phase==='playing'){phase='paused';overlay('Paused','Take a break. Your progress will stay here.','Resume ↗');$('pause').textContent='▶ Resume'}else if(phase==='paused'){phase='playing';$('overlay').classList.add('hidden');$('pause').textContent='Ⅱ Pause';last=0}hud()}
+  function move(d){if(!d)return;if(mode==='snake'&&snake.length>1&&d.x===-direction.x&&d.y===-direction.y)return;queued=d;if(mode==='quest')direction=d}
+  function questTick(){
+    const p={x:player.x+direction.x,y:player.y+direction.y};if(inQuest(p))player=p;
+    const i=tiles.findIndex(t=>t.x===player.x&&t.y===player.y);if(i>=0){const t=tiles.splice(i,1)[0];score+=t.count;bestUpdate();soundFX(780);$('recent-event').textContent=(t.practice?'Practice tile':formatDate(t.date))+` · ${t.count} ${source==='Recent public events (partial)'?'public events':'contributions'} collected!`;if(!tiles.length)return end('Board cleared!',`Collected ${score} ${source==='Recent public events (partial)'?'events':'contributions'}. Play again?`)}
+    if(stepNumber%4===0)for(const g of ghosts){const ways=allDirs.map(d=>({x:g.x+d.x,y:g.y+d.y})).filter(inQuest);if(ways.length){ways.sort((a,b)=>(Math.abs(a.x-player.x)+Math.abs(a.y-player.y))-(Math.abs(b.x-player.x)+Math.abs(b.y-player.y)));const target=Math.random()<.52?ways[0]:ways[rand(ways.length)];g.x=target.x;g.y=target.y}}
+    if(ghosts.some(g=>px(g)===px(player))){lives--;soundFX(230);player=randomStart();direction=dirs.right;if(lives<=0)end('Out of lives',`Collected ${score} contribution points. Try again.`)}
+  }
+  function randomFood(){const occ=new Set(snake.map(px));const choices=[];for(let y=0;y<snakeRows;y++)for(let x=0;x<snakeCols;x++)if(!occ.has(`${x},${y}`))choices.push({x,y});return choices.length?choices[rand(choices.length)]:null}
+  function placeFood(){food=randomFood()||{x:10,y:7}}
+  function snakeTick(){direction=queued;const p={x:snake[0].x+direction.x,y:snake[0].y+direction.y},eat=px(p)===px(food);const body=eat?snake:snake.slice(0,-1);if(!inSnake(p)||body.some(t=>px(t)===px(p)))return end('Game over',`You scored ${score}. Another round?`);snake.unshift(p);if(eat){score+=10;bestUpdate();soundFX(760);placeFood();if(snake.length>=snakeRows*snakeCols-1)end('You win!','Board completely filled!')}else snake.pop()}
+  function rect(x,y,w,h,fill,stroke,r=5){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.lineWidth=1;ctx.strokeStyle=stroke;ctx.stroke()}}
+  function draw(){const w=canvas.width,h=canvas.height;const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#0b2222');g.addColorStop(1,'#061523');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    if(mode==='quest'){
+      ctx.textAlign='left';ctx.fillStyle='#91b6a8';ctx.font='12px monospace';ctx.fillText('← OLDER',BX,55);ctx.fillText('LAST 26 WEEKS • LIVE GITHUB DAYS',BX+155,55);ctx.fillText('NEWER →',w-110,55);
+      const tags=['SUN','MON','TUE','WED','THU','FRI','SAT'];ctx.font='10px monospace';ctx.textAlign='left';tags.forEach((t,i)=>ctx.fillText(t,1,BY+i*STEP+15));
+      for(const d of board.values()){const x=BX+d.x*STEP,y=BY+d.y*STEP;const intensity=Math.min(4,d.level||Math.ceil(d.count/3));const colors=['#122e31','#164a3b','#1e7650','#38a76e','#8bec9e'];rect(x+2,y+2,STEP-4,STEP-4,d.future?'#0a1b24':d.count?colors[intensity]:'#183335','#38574b',4)}
+      for(const t of tiles){const x=BX+t.x*STEP,y=BY+t.y*STEP;rect(x+3,y+3,STEP-6,STEP-6,t.practice?'#ad9b50':'#79eaa0','#c7ffd7',4)}
+      for(const g of ghosts){const x=BX+g.x*STEP,y=BY+g.y*STEP;rect(x+4,y+4,STEP-8,STEP-8,'#fc727c',null,6);ctx.fillStyle='#111';ctx.fillRect(x+8,y+9,3,4);ctx.fillRect(x+15,y+9,3,4)}
+      const x=BX+player.x*STEP,y=BY+player.y*STEP;ctx.fillStyle='#ffc76b';ctx.beginPath();ctx.arc(x+STEP/2,y+STEP/2,STEP/2-3,.22,Math.PI*2-.22);ctx.lineTo(x+STEP/2,y+STEP/2);ctx.fill();
+      ctx.textAlign='left';ctx.fillStyle='#87b9ad';ctx.font='12px monospace';const desc=source==='Full contribution calendar'?'ACCURATE CONTRIBUTION COUNTS':source==='Recent public events (partial)'?'PARTIAL PUBLIC EVENTS · NOT FULL CALENDAR':'PRACTICE TILES · CALENDAR PENDING';ctx.fillText(desc,BX,375);
+      ctx.fillText(`${tiles.length} remaining tiles  •  hover a day for GitHub counts`,BX,402);
     }else{
-      for(let i=snake.length-1;i>=0;i--){const s=snake[i];round(s.x*S+4,s.y*S+4,S-8,S-8,6,i===0?'#ffba73':'#55cfa1')}
-      round(food.x*S+7,food.y*S+7,S-14,S-14,4,'#b1ff85');
+      for(let y=0;y<snakeRows;y++)for(let x=0;x<snakeCols;x++)rect(x*unit+3,y*unit+3,unit-6,unit-6,(x+y)%3?'#143331':'#1c423d',null,5);
+      for(let i=snake.length-1;i>=0;i--){const p=snake[i];rect(p.x*unit+4,p.y*unit+4,unit-8,unit-8,i?'#56c79b':'#ffc76b',null,6)}
+      rect(food.x*unit+7,food.y*unit+7,unit-14,unit-14,'#aefa85',null,4);
     }
-    // subtle scanlines
-    ctx.fillStyle='#030a0d10';for(let y=0;y<h;y+=5)ctx.fillRect(0,y,w,1)
+    ctx.fillStyle='#030b1014';for(let y=0;y<h;y+=6)ctx.fillRect(0,y,w,1);
   }
-  function loop(time){if(state==='playing'&&(last===0||time-last>=speed[game])){if(last===0){last=time}else{last=time;stepCount++;if(game==='quest')tickQuest();else tickSnake();hud()}}draw();raf=requestAnimationFrame(loop)}
-  btnQuest.addEventListener('click',()=>setMode('quest'));btnSnake.addEventListener('click',()=>setMode('snake'));
-  btnStart.addEventListener('click',start);btnPause.addEventListener('click',pause);
-  $('overlay-start').addEventListener('click',()=>state==='paused'?pause():start());
-  btnSound.addEventListener('click',()=>{sound=!sound;btnSound.setAttribute('aria-pressed',String(sound));btnSound.textContent=sound?'♪ Sound on':'♪ Sound off';if(sound)beep()});
-  document.addEventListener('keydown',e=>{const key=e.key.toLowerCase();const k={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'}[key];if(k){e.preventDefault();move(dirs[k])}else if(key===' '){e.preventDefault();if(state==='playing'||state==='paused')pause();else start()}});
-  document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('pointerdown',(e)=>{e.preventDefault();move(dirs[b.dataset.dir]);if(state==='ready')start()}));
-  $('year').textContent=String(new Date().getFullYear());setMode('quest');requestAnimationFrame(loop);
+  function frame(t){if(phase==='playing'&&(last===0||t-last>=(mode==='quest'?105:135))){if(last===0)last=t;else{last=t;stepNumber++;mode==='quest'?questTick():snakeTick();hud()}}draw();requestAnimationFrame(frame)}
+  $('mode-quest').addEventListener('click',()=>setMode('quest'));
+  $('mode-snake').addEventListener('click',()=>setMode('snake'));
+  $('start').addEventListener('click',()=>reset(true));
+  $('pause').addEventListener('click',pause);
+  $('overlay-start').addEventListener('click',()=>phase==='paused'?pause():reset(true));
+  $('sound').addEventListener('click',()=>{sound=!sound;$('sound').textContent=sound?'♪ Sound on':'♪ Sound off';$('sound').setAttribute('aria-pressed',String(sound));soundFX(770)});
+  $('refresh-data').addEventListener('click',()=>{loadCalendar(true);loadActivity()});
+  document.addEventListener('keydown',e=>{const k=e.key.toLowerCase(),v={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'}[k];if(v){e.preventDefault();move(dirs[v]);}else if(k===' '){e.preventDefault();phase==='ready'||phase==='game over'?reset(true):pause()}});
+  document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();move(dirs[b.dataset.dir])}));
+  canvas.addEventListener('mousemove',e=>{if(mode!=='quest')return;const r=canvas.getBoundingClientRect(),x=Math.floor(((e.clientX-r.left)*canvas.width/r.width-BX)/STEP),y=Math.floor(((e.clientY-r.top)*canvas.height/r.height-BY)/STEP),d=board.get(`${x},${y}`);canvas.title=d&&!d.future?`${formatDate(d.date)} — ${d.count} contributions`:'GitHub contribution calendar'});
+  $('year').textContent=String(new Date().getFullYear());
+  const requested=new URL(location.href).searchParams.get('game');setMode(requested==='snake'?'snake':'quest');buildBoard();requestAnimationFrame(frame);
+  loadActivity().finally(()=>loadCalendar());setInterval(()=>{loadActivity();if(phase!=='playing')loadCalendar()},300000);
 })();

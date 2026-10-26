@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0b122d">
-  <meta name="description" content="Commit Quest and Pixel Snake, two mini browser games by Dion Agung Kadang.">
+  <meta name="description" content="Play Commit Quest with dion1727 public GitHub contribution days and Pixel Snake, by Dion Agung Kadang.">
   <title>Dion's Arcade — Commit Quest & Pixel Snake</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,16 +18,22 @@
     <section class="hero">
       <div class="eyebrow">DEVELOPER ARCADE / TWO PLAYABLE GAMES <span class="online">● ONLINE</span></div>
       <h1>Code. Build. <span>Play.</span></h1>
-      <p>Two tiny browser games, built for fun. Pick a mode, collect points, and beat your high score. No account, no downloads.</p>
+      <p>Commit Quest takes its tiles from my real GitHub contributions. Collect active days, dodge the bugs and see how many contributions you can claim. Or relax with Pixel Snake.</p>
     </section>
 
-    <section class="arcade-panel" aria-label="Playable games">
+    <div class="live-strip" aria-live="polite">
+  <span class="live-dot"></span>
+  <span id="data-status">Connecting to GitHub calendar…</span>
+  <span id="data-updated">Waiting for sync</span>
+  <button type="button" id="refresh-data" class="mini-button">↻ Refresh data</button>
+</div>
+<section class="arcade-panel" aria-label="Playable games">
       <div class="panel-head">
         <div>
           <h2>Arcade station</h2>
-          <span class="sub">Made with plain HTML, CSS and JavaScript</span>
+          <span class="sub">Real GitHub activity • HTML, CSS and JavaScript</span>
         </div>
-        <div class="live-pill"><span class="led"></span> LOCAL SESSION</div>
+        <div class="live-pill"><span class="led"></span> CONNECTED TO GITHUB</div>
       </div>
       <div class="game-tabs" role="group" aria-label="Choose game">
         <button id="mode-quest" class="tab active" type="button" aria-pressed="true">▣ Commit Quest</button>
@@ -42,7 +48,7 @@
             <div><span class="hud-label">STATUS</span><strong id="status">READY</strong></div>
           </div>
           <div class="canvas-wrap"><canvas id="board" width="690" height="450" aria-label="Game board. Use arrow keys or WASD to play."></canvas>
-            <div id="overlay" class="overlay"><div class="overlay-content"><span class="overline">PRESS START</span><h3 id="overlay-title">Commit Quest</h3><p id="overlay-message">Collect green commit tiles. Watch out for red bugs.</p><button id="overlay-start" class="primary" type="button">Start game ↗</button></div></div>
+            <div id="overlay" class="overlay"><div class="overlay-content"><span class="overline">PRESS START</span><h3 id="overlay-title">Commit Quest</h3><p id="overlay-message">Collect green dates from my GitHub calendar. Each collected tile scores its real contribution count.</p><button id="overlay-start" class="primary" type="button">Start game ↗</button></div></div>
           </div>
           <div class="controls-row">
             <button id="start" class="primary" type="button">▶ Start / Restart</button>
@@ -59,25 +65,35 @@
         <aside class="info-column">
           <div class="info-card">
             <span class="section-kicker">HOW TO PLAY</span>
-            <h3 id="how-title">Collect commits. Avoid bugs.</h3>
-            <p id="how-text">Move around the board and collect green tiles. Stay clear of moving red bugs. You have three lives.</p>
+            <h3 id="how-title">Collect real contribution days.</h3>
+            <p id="how-text">Every green tile is a date that actually has contributions on dion1727. Collect it for that day's real contribution count. Avoid red bugs!</p>
             <div class="keycaps"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>or</span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></div>
+          </div>
+          <div class="info-card activity" id="github-activity"><span class="section-kicker">GITHUB / PUBLIC ACTIVITY</span>
+            <h3><span id="public-repos">—</span> public repos · <span id="followers">—</span> followers</h3>
+            <p id="recent-event">Checking latest public activity…</p>
+            <a href="https://github.com/dion1727?tab=overview" target="_blank" rel="noopener">Real GitHub contribution graph ↗</a>
           </div>
           <div class="info-card orange">
             <span class="section-kicker">YOUR RUN</span>
-            <h3>Better each time.</h3>
-            <p>Your best score stays saved in this browser. Try switching game modes for another challenge.</p>
+            <h3 id="stats-title">Every day counts.</h3>
+            <p>Highest score is saved in your browser. The contribution calendar comes from public GitHub data — and refreshes automatically.</p>
           </div>
           <div class="info-card small">
             <span class="section-kicker">BUILT BY</span>
             <h3>Dion Agung Kadang</h3>
-            <p>Informatics student. Web dev projects. Too many browser tabs.</p>
+            <p>Informatics student. Web dev and playful side projects. Keeping it simple.</p>
             <a href="https://github.com/dion1727">Visit my GitHub →</a>
           </div>
         </aside>
       </div>
     </section>
-    <footer>MADE FOR FUN <span>KEEP BUILDING.</span> © <span id="year">2026</span></footer>
+    <nav class="social-footer" aria-label="Social accounts">
+      <a href="https://github.com/dion1727">GitHub</a><a href="https://linkedin.com/in/Dion%20Agung%20Kadang">LinkedIn</a>
+      <a href="https://kaggle.com/dionagungkadang">Kaggle</a><a href="https://instagram.com/dionmrfs_d">Instagram</a>
+      <a href="https://youtube.com/@daizodn9742">YouTube</a><a href="https://discord.gg/diondn_">Discord</a>
+      <a href="mailto:dion1727agung@gmail.com">Email</a>
+    </nav><footer>MADE FOR FUN <span>KEEP BUILDING.</span> © <span id="year">2026</span></footer>
   </main>
   <script src="game.js" defer></script>
 </body>
