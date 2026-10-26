@@ -1,9 +1,9 @@
 <div align="center">
-<a href="https://dion1727.github.io/dion1727/"><img src="assets/hero-glass-animated.gif" alt="Dion Agung Kadang — animated glass developer profile" width="100%" /></a>
+<a href="https://dion1727.github.io/"><img src="assets/hero-glass-animated.gif" alt="Dion Agung Kadang — animated glass developer profile" width="100%" /></a>
 
 <img src="assets/intro-glass-animated.gif" alt="Build. Create. Repeat." width="100%" />
 
-[**Explore portfolio**](https://dion1727.github.io/dion1727/) &nbsp; · &nbsp; [**Play Commit Quest**](https://dion1727.github.io/dion1727/?game=quest#arcade) &nbsp; · &nbsp; [**GitHub activity**](https://dion1727.github.io/dion1727/#contributions)
+[**Explore portfolio**](https://dion1727.github.io/) &nbsp; · &nbsp; [**Play Commit Quest**](https://dion1727.github.io/?game=quest#arcade) &nbsp; · &nbsp; [**GitHub activity**](https://dion1727.github.io/#contributions)
 </div>
 
 ## Hey, I'm Dion.
@@ -25,9 +25,9 @@ I study Informatics and build useful web applications with **Python, JavaScript,
 <img src="assets/arcade-header-animated.gif" alt="Animated arcade header" width="100%" />
 
 <div align="center">
-<a href="https://dion1727.github.io/dion1727/?game=quest#arcade"><img src="assets/arcade-preview-animated.gif" alt="Animated arcade preview — click to play" width="100%" /></a>
+<a href="https://dion1727.github.io/?game=quest#arcade"><img src="assets/arcade-preview-animated.gif" alt="Animated arcade preview — click to play" width="100%" /></a>
 
-[**▶ PLAY THE GAMES**](https://dion1727.github.io/dion1727/?game=quest#arcade) &nbsp; · &nbsp; [**View contributions**](https://dion1727.github.io/dion1727/#contributions)
+[**▶ PLAY THE GAMES**](https://dion1727.github.io/?game=quest#arcade) &nbsp; · &nbsp; [**View contributions**](https://dion1727.github.io/#contributions)
 </div>
 
 ## GitHub activity
@@ -39,7 +39,7 @@ I study Informatics and build useful web applications with **Python, JavaScript,
 <a href="https://github.com/dion1727"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=dion1727&layout=compact&hide_border=true&theme=transparent&title_color=bbbbbb&text_color=cccccc" alt="Top repository languages" height="165" /></a>
 </div>
 
-<p align="center"><a href="https://dion1727.github.io/dion1727/#contributions"><b>View live GitHub activity</b></a></p>
+<p align="center"><a href="https://dion1727.github.io/#contributions"><b>View live GitHub activity</b></a></p>
 
 ## Find me online
 
