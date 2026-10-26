@@ -1,66 +1,53 @@
 <div align="center">
+<a href="https://dion1727.github.io/"><img src="assets/hero.svg" alt="Dion Agung Kadang | Full-stack development and playable arcade portfolio" width="100%" /></a>
 
-<a href="https://dion1727.github.io/dion1727/"><img src="assets/hero.svg" width="100%" alt="Dion Agung Kadang — animated developer intro; click to visit the interactive arcade" /></a>
+### Build things that work. Explore things that inspire.
 
-### Building things for the web, one experiment at a time.
-
-**Python &nbsp; / &nbsp; JavaScript &nbsp; / &nbsp; Laravel &nbsp; / &nbsp; PHP &nbsp; / &nbsp; MySQL**
-
-[About](#a-little-about-me) · [Play](#play-the-arcade) · [Activity](#contribution-games) · [Connect](#find-me-online)
-
+[**Explore interactive portfolio**](https://dion1727.github.io/) &nbsp; · &nbsp; [**Play Commit Quest**](https://dion1727.github.io/#arcade) &nbsp; · &nbsp; [**Live GitHub activity**](https://dion1727.github.io/#contributions)
 </div>
 
-### A little about me
+## Hey, I'm Dion.
 
-Hey, I'm **Dion Agung Kadang**. I'm an Informatics student who enjoys building real applications, clean user interfaces, and useful backend systems. Most days I'm learning, experimenting, debugging, and finding better ways to write code.
+I'm **Dion Agung Kadang**, an Informatics student who enjoys turning ideas into useful software. I build web interfaces, backend services, and small interactive experiments using **Python, JavaScript, PHP, Laravel, and MySQL**.
 
-I work with **Python, JavaScript, PHP, Laravel, HTML, CSS, MySQL, and Git**. Outside of bigger projects, I make little coding experiments and browser games just for fun.
+I enjoy practical problem solving, clean UI/UX, open-source learning, and making code easier to maintain.
 
-### Play the arcade
+## What I work with
 
-<a href="https://dion1727.github.io/dion1727/"><img src="assets/arcade-entry.svg" alt="Open the real interactive Commit Quest, Pixel Snake and Commit Breaker web games" width="100%" /></a>
+<img src="assets/toolkit.svg" alt="Python, JavaScript, PHP, Laravel, MySQL, HTML/CSS and Git" width="100%" />
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,js,php,laravel,mysql,html,css,git,github,vscode&perline=10" alt="Technology icons" />
+</p>
+
+**Frontend:** HTML · CSS · JavaScript · Responsive UI · Interaction design  
+**Backend:** Python · PHP · Laravel · REST APIs  
+**Databases:** MySQL · SQL fundamentals  
+**Tools:** Git · GitHub · VS Code  
+**Exploring:** machine learning · data analysis · software architecture
+
+## My interactive arcade
+
+The games are playable on my website—not a screenshot inside the README. **Commit Quest** turns my GitHub contribution calendar into collectible points. **Pixel Snake** and **Commit Breaker** can be played with keyboard or touch controls.
 
 <div align="center">
 
-**[PLAY COMMIT QUEST](https://dion1727.github.io/dion1727/?game=quest)** &nbsp; · &nbsp; **[PLAY PIXEL SNAKE](https://dion1727.github.io/dion1727/?game=snake)** &nbsp; · &nbsp; **[PLAY COMMIT BREAKER](https://dion1727.github.io/dion1727/?game=breaker)**
+[**PLAY THE ACTUAL GAMES →**](https://dion1727.github.io/#arcade) &nbsp;&nbsp; [**SEE REAL CONTRIBUTIONS →**](https://dion1727.github.io/#contributions)
 
-<sub>The games above are interactive JavaScript applications on GitHub Pages. The image is an animated entrance, not the game itself. README cannot run JavaScript.</sub>
-
+<sub>GitHub README doesn't run browser JavaScript. The game launches on GitHub Pages.</sub>
 </div>
 
-### Contribution games
-
-These animations are generated automatically from **my real GitHub contribution graph**, not invented activity. They appear after the *After Hours - Animated contribution games* GitHub Action completes successfully.
-
-<details>
-<summary><b>▶ Open the animated Pac-Man contribution graph</b> (available after running the GitHub Action)</summary>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/dion1727/dion1727/arcade-output/pacman-contribution-graph-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/dion1727/dion1727/arcade-output/pacman-contribution-graph.svg" />
-  <img src="https://raw.githubusercontent.com/dion1727/dion1727/arcade-output/pacman-contribution-graph.svg" width="100%" alt="Pac-Man playing across the real contribution graph of dion1727" />
-</picture>
-
-</details>
+## GitHub activity
 
 <div align="center">
-
-[▶ Interactive contribution board](https://dion1727.github.io/dion1727/#radar) · [View GitHub activity](https://github.com/dion1727?tab=overview)
-
+  <a href="https://github.com/dion1727"><img src="https://github-readme-stats.vercel.app/api?username=dion1727&show_icons=true&hide_border=true&theme=transparent" alt="GitHub activity stats" height="160" /></a>
+  <a href="https://github.com/dion1727"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=dion1727&layout=compact&hide_border=true&theme=transparent" alt="Most-used repository languages" height="160" /></a>
 </div>
 
-### Find me online
+[**Open contribution calendar and GitHub activity →**](https://dion1727.github.io/#contributions)
 
-<div align="center">
+## Find me online
 
-<a href="https://github.com/dion1727"><img src="assets/social-github.svg" alt="GitHub" /></a>
-<a href="https://linkedin.com/in/Dion%20Agung%20Kadang"><img src="assets/social-linkedin.svg" alt="LinkedIn" /></a>
-<a href="https://kaggle.com/dionagungkadang"><img src="assets/social-kaggle.svg" alt="Kaggle" /></a>
-<a href="https://instagram.com/dionmrfs_d"><img src="assets/social-instagram.svg" alt="Instagram" /></a>
-<a href="https://youtube.com/@daizodn9742"><img src="assets/social-youtube.svg" alt="YouTube" /></a>
-<a href="https://discord.gg/diondn_"><img src="assets/social-discord.svg" alt="Discord" /></a>
-<a href="mailto:dion1727agung@gmail.com"><img src="assets/social-email.svg" alt="Email" /></a>
+[**GitHub**](https://github.com/dion1727) &nbsp; · &nbsp; [**LinkedIn**](https://www.linkedin.com/in/Dion%20Agung%20Kadang/) &nbsp; · &nbsp; [**Kaggle**](https://www.kaggle.com/dionagungkadang) &nbsp; · &nbsp; [**Instagram**](https://www.instagram.com/dionmrfs_d/) &nbsp; · &nbsp; [**YouTube**](https://www.youtube.com/@daizodn9742) &nbsp; · &nbsp; [**Discord**](https://discord.gg/diondn_) &nbsp; · &nbsp; [**Email**](mailto:dion1727agung@gmail.com)
 
-<sub>Code. Build. Play. Repeat.</sub>
-
-</div>
+<p align="center"><sub>Code. Build. Play. Repeat. · <a href="https://github.com/dion1727">@dion1727</a></sub></p>
