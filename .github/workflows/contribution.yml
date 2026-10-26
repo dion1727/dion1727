@@ -1,0 +1,39 @@
+name: Update contribution arcade
+
+on:
+  schedule:
+    - cron: '27 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout profile
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Create animated snake from real contributions
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: dion1727
+          outputs: |
+            dist/live-contribution.svg?palette=github-dark
+
+      - name: Update the image in the main branch
+        run: |
+          cp dist/live-contribution.svg assets/live-contribution.svg
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/live-contribution.svg
+          if git diff --staged --quiet; then
+            echo "Contribution image unchanged"
+          else
+            git commit -m "Update contribution animation"
+            git push origin HEAD:main
+          fi

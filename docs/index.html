@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1920">
+  <meta name="description" content="Commit Quest and Pixel Snake, two mini browser games by Dion Agung Kadang.">
+  <title>Dion's Arcade — Commit Quest & Pixel Snake</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://github.com/dion1727" aria-label="Back to GitHub profile"><span class="brand-icon">▦</span><span>DION'S <em>ARCADE</em></span></a>
+    <a class="profile-link" href="https://github.com/dion1727">← GitHub profile</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">AN INTERACTIVE PROFILE EXPERIMENT <span class="online">● ONLINE</span></div>
+      <h1>Code. Build. <span>Play.</span></h1>
+      <p>Two tiny browser games, built for fun. Pick a mode, collect points, and beat your high score. No account, no downloads.</p>
+    </section>
+
+    <section class="arcade-panel" aria-label="Playable games">
+      <div class="panel-head">
+        <div>
+          <h2>Arcade station</h2>
+          <span class="sub">Made with plain HTML, CSS and JavaScript</span>
+        </div>
+        <div class="live-pill"><span class="led"></span> LOCAL SESSION</div>
+      </div>
+      <div class="game-tabs" role="group" aria-label="Choose game">
+        <button id="mode-quest" class="tab active" type="button" aria-pressed="true">▣ Commit Quest</button>
+        <button id="mode-snake" class="tab" type="button" aria-pressed="false">▤ Pixel Snake</button>
+      </div>
+      <div class="arcade-grid">
+        <div class="game-column">
+          <div class="hud" aria-live="polite">
+            <div><span class="hud-label">SCORE</span><strong id="score">0000</strong></div>
+            <div><span class="hud-label">BEST</span><strong id="best">0000</strong></div>
+            <div><span class="hud-label" id="third-label">LIVES</span><strong id="third">3</strong></div>
+            <div><span class="hud-label">STATUS</span><strong id="status">READY</strong></div>
+          </div>
+          <div class="canvas-wrap"><canvas id="board" width="690" height="450" aria-label="Game board. Use arrow keys or WASD to play."></canvas>
+            <div id="overlay" class="overlay"><div class="overlay-content"><span class="overline">PRESS START</span><h3 id="overlay-title">Commit Quest</h3><p id="overlay-message">Collect green commit tiles. Watch out for red bugs.</p><button id="overlay-start" class="primary" type="button">Start game ↗</button></div></div>
+          </div>
+          <div class="controls-row">
+            <button id="start" class="primary" type="button">▶ Start / Restart</button>
+            <button id="pause" class="secondary" type="button" disabled>Ⅱ Pause</button>
+            <button id="sound" class="secondary" type="button" aria-pressed="false">♪ Sound off</button>
+          </div>
+          <div class="touch" aria-label="Touch game controls">
+            <button class="ctrl up" data-dir="up" aria-label="Up">↑</button>
+            <button class="ctrl left" data-dir="left" aria-label="Left">←</button>
+            <button class="ctrl down" data-dir="down" aria-label="Down">↓</button>
+            <button class="ctrl right" data-dir="right" aria-label="Right">→</button>
+          </div>
+        </div>
+        <aside class="info-column">
+          <div class="info-card">
+            <span class="section-kicker">HOW TO PLAY</span>
+            <h3 id="how-title">Collect commits. Avoid bugs.</h3>
+            <p id="how-text">Move around the board and collect green tiles. Stay clear of moving red bugs. You have three lives.</p>
+            <div class="keycaps"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>or</span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></div>
+          </div>
+          <div class="info-card orange">
+            <span class="section-kicker">YOUR RUN</span>
+            <h3>Better each time.</h3>
+            <p>Your best score stays saved in this browser. Try switching game modes for another challenge.</p>
+          </div>
+          <div class="info-card small">
+            <span class="section-kicker">BUILT BY</span>
+            <h3>Dion Agung Kadang</h3>
+            <p>Informatics student. Web dev projects. Too many browser tabs.</p>
+            <a href="https://github.com/dion1727">Visit my GitHub →</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <footer>MADE FOR FUN <span>KEEP BUILDING.</span> © <span id="year">2026</span></footer>
+  </main>
+  <script src="game.js" defer></script>
+</body>
+</html>
