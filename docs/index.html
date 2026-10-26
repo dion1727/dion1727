@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#050608" />
+<meta name="description" content="Dion Agung Kadang — a glassmorphism developer portfolio with three playable coding arcade games and real GitHub contribution activity." />
+<title>Dion — Developer / Arcade Portfolio</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><div class="glow g-one"></div><div class="glow g-two"></div><div class="glow g-three"></div></div>
+<div class="page-wrap" id="top">
+<header class="topbar glass">
+ <a class="brand" href="#top"><span class="brand-mark">D<span class="tiny-dot">.</span></span><span>DION<span class="brand-light"> / DEV PORTFOLIO</span></span></a>
+ <nav aria-label="Main navigation"><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#arcade">Arcade</a><a href="#contributions">Activity</a><a href="#contact">Contact</a></nav>
+ <a class="nav-action" href="https://github.com/dion1727" target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a>
+</header>
+<main>
+<section class="hero" id="about">
+ <div class="hero-copy"><div class="eyebrow"><span class="live-indicator"></span> OPEN TO EXPLORING NEW IDEAS <span class="dot-separator">/</span> INDONESIA</div>
+ <h1>Design the idea.<br/><span>Build the real thing.</span></h1>
+ <p>Hey, I'm <b>Dion Agung Kadang.</b> I study Informatics and build full-stack web apps, useful tools, thoughtful interfaces—and the occasional browser game.</p>
+ <div class="hero-buttons"><a class="btn btn-primary" href="#arcade">Play the arcade <span>↗</span></a><a class="btn btn-outline" href="#expertise">Explore my skills <span>↓</span></a></div>
+ <div class="hero-mini"><span><i></i> Python</span><span><i></i> JavaScript</span><span><i></i> Laravel</span><span><i></i> MySQL</span></div>
+ </div>
+ <div class="hero-visual"><div class="lens lens-one"></div><div class="lens lens-two"></div>
+  <div class="floating-card glass"><div class="window-controls"><b></b><b></b><b></b><span>developer.profile</span></div><pre><span class="c-muted">// currently in build mode</span>
+<span class="c-purple">const</span> dion = {
+  role: <span class="c-mint">'Developer'</span>,
+  focus: <span class="c-mint">'Web & Software'</span>,
+  mindset: <span class="c-mint">'Keep improving'</span>
+};<span class="cursor"></span></pre><div class="editor-status">● All systems ready <span>CODE • BUILD • PLAY</span></div></div>
+  <div class="floating-pill glass"><span class="pill-star">✦</span> Making ideas interactive.</div>
+ </div>
+</section>
+<section class="intro-strip glass"><span>What I like to build</span><strong>Applications with purpose.</strong><span>Frontend experiences / Backend logic / Creative tools</span></section>
+<section class="expertise" id="expertise"><div class="section-title"><div><div class="kicker">MY TOOLBOX</div><h2>Skills & <em>expertise.</em></h2></div><p>Not a wall of random logos. These are the technologies and areas I actively work with or study.</p></div>
+ <div class="skill-grid">
+ <article class="skill-card glass"><div class="skill-top"><span class="skill-icon">⌘</span><span class="skill-number">WEB / 01</span></div><h3>Frontend development</h3><p>Building responsive, usable websites with careful layouts and interactive details.</p><div class="tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Responsive UI</span></div></article>
+ <article class="skill-card glass"><div class="skill-top"><span class="skill-icon">{ }</span><span class="skill-number">LOGIC / 02</span></div><h3>Backend & APIs</h3><p>Working with application logic, server-side programming, routes and integrations.</p><div class="tags"><span>Python</span><span>PHP</span><span>Laravel</span><span>REST APIs</span></div></article>
+ <article class="skill-card glass"><div class="skill-top"><span class="skill-icon">◈</span><span class="skill-number">DATA / 03</span></div><h3>Databases & data</h3><p>Structuring relational data and analyzing datasets to support real applications.</p><div class="tags"><span>MySQL</span><span>SQL</span><span>Pandas</span><span>Data analysis</span></div></article>
+ <article class="skill-card glass"><div class="skill-top"><span class="skill-icon">⌁</span><span class="skill-number">WORKFLOW / 04</span></div><h3>Development tools</h3><p>Collaborative workflows, version control, debugging and developer environments.</p><div class="tags"><span>Git</span><span>GitHub</span><span>VS Code</span><span>CLI</span></div></article>
+ </div>
+ <div class="explore-line glass"><div><span class="tiny-orbit">✧</span><strong>Currently exploring</strong><p>Machine learning, software architecture, security, accessible UI/UX.</p></div><a href="https://github.com/dion1727?tab=repositories" target="_blank" rel="noopener noreferrer">Explore repositories ↗</a></div>
+</section>
+<section id="arcade" class="arcade-section"><div class="section-title"><div><div class="kicker">BROWSER ARCADE</div><h2>Take a <em>coding break.</em></h2></div><p>Real canvas-based JavaScript games. Choose a mode, press Start, use WASD or the arrow keys, and play.</p></div>
+ <div class="game-selector" role="group" aria-label="Choose game">
+ <button id="mode-quest" class="game-option active" aria-pressed="true" type="button"><span class="option-icon">◕</span><span><b>Commit Quest</b><small>collect contribution dates</small></span></button>
+ <button id="mode-snake" class="game-option" aria-pressed="false" type="button"><span class="option-icon">▦</span><span><b>Pixel Snake</b><small>grow your high score</small></span></button>
+ <button id="mode-breaker" class="game-option" aria-pressed="false" type="button"><span class="option-icon">◫</span><span><b>Commit Breaker</b><small>break activity bricks</small></span></button>
+ </div>
+ <div class="play-layout"><div class="game-main glass"><div class="game-topline"><div><span class="game-dot"></span> LIVE ARCADE <span class="dimmed">/ JAVASCRIPT</span></div><span>PLAYER ONE</span></div>
+ <div class="hud"><div><small>SCORE</small><strong id="score">0000</strong></div><div><small>BEST</small><strong id="best">0000</strong></div><div id="third-label"><small>LIVES</small><strong id="third">3</strong></div><div><small>STATUS</small><strong id="status">READY</strong></div></div>
+ <div class="canvas-wrap"><canvas id="board" width="690" height="450" aria-label="Playable game area. Controls: arrow keys or WASD." tabindex="0"></canvas><div id="overlay" class="overlay"><div class="overlay-content"><div class="kicker">READY, PLAYER ONE?</div><h3 id="overlay-title">Commit Quest</h3><p id="overlay-message">Collect activity, avoid bugs and aim for a new high score.</p><button id="overlay-start" class="btn btn-primary" type="button">Start game ↗</button></div></div></div>
+ <div class="game-actions"><div class="buttons"><button id="start" type="button" class="btn btn-primary">▶ Start / Restart</button><button id="pause" type="button" class="btn btn-outline" disabled>Ⅱ Pause</button><button id="sound" type="button" class="btn btn-outline" aria-pressed="false">♪ Sound off</button></div><div class="game-speed"><label for="game-speed">SPEED</label><select id="game-speed"><option value="0.8">Relaxed</option><option value="1" selected>Normal</option><option value="1.35">Fast</option></select></div></div>
+ <div class="touch" aria-label="Touch and click movement controls"><button type="button" class="ctrl up" data-dir="up" aria-label="Up">↑</button><button type="button" class="ctrl left" data-dir="left" aria-label="Left">←</button><button type="button" class="ctrl down" data-dir="down" aria-label="Down">↓</button><button type="button" class="ctrl right" data-dir="right" aria-label="Right">→</button></div>
+ </div>
+ <aside class="game-info glass"><div class="info-flag">HOW TO PLAY <span>↗</span></div><h3 id="how-title">Collect your commits.</h3><p id="how-text">The board uses real contribution days when GitHub data is available. Collect colored tiles and avoid bugs.</p>
+ <div class="data-state"><span>GITHUB DATA</span><strong id="data-status">Connecting…</strong><small id="data-updated">Waiting for data</small><button id="refresh-data" type="button">↻ Refresh contribution data</button></div>
+ <div class="mini-stat"><div><small>PUBLIC REPOS</small><strong id="public-repos">—</strong></div><div><small>FOLLOWERS</small><strong id="followers">—</strong></div></div>
+ <div class="side-bottom"><small>GAMEBOARD STATUS</small><h4 id="stats-title">Awaiting activity data</h4><a href="https://github.com/dion1727?tab=overview" target="_blank" rel="noopener noreferrer">View actual GitHub profile ↗</a></div>
+ <div class="report"><small>ACTIVITY LOG</small><p id="recent-event">Checking GitHub activity...</p></div></aside></div>
+ <p class="game-footnote">Commit Quest never makes up your real contribution count: if its source is unavailable, the interface clearly switches to practice mode. GitHub contribution data refreshes when the page is opened or when Refresh is pressed.</p>
+</section>
+<span id="radar" aria-hidden="true"></span><span id="activity" aria-hidden="true"></span><section class="contributions" id="contributions"><div class="section-title"><div><div class="kicker">GITHUB / LIVE DATA</div><h2>Your activity, <em>visualized.</em></h2></div><p>A contribution calendar synced from GitHub plus your latest public activity. Data depends on GitHub availability.</p></div>
+<div class="contribution-layout"><div class="heatmap-box glass"><div class="section-toolbar"><b>Contribution calendar · last 52 weeks</b><span id="radar-source">FETCHING</span></div><div id="heatmap" class="heatmap" role="img" aria-label="Public contribution calendar"></div><div class="heatmap-footer"><small>OLDER ←</small><small>LESS ▪ ▪ ▪ ▪ ▪ MORE</small><small>→ NEWER</small></div></div><div class="counts-box glass"><div><small>CONTRIBUTIONS</small><strong id="contribution-total">—</strong></div><div><small>ACTIVE DAYS</small><strong id="active-days">—</strong></div><div><small>LAST REFRESH</small><strong id="sync-age">—</strong></div><button type="button" id="refresh-radar">↻ Refresh activity</button></div></div>
+<div class="activity-feed glass"><div class="section-toolbar"><b>Recent public activity</b><a href="https://github.com/dion1727?tab=overview" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></div><div id="activity-feed" class="feed-list" aria-live="polite">Loading public GitHub activity...</div></div>
+</section>
+<section class="contact" id="contact"><div class="section-title"><div><div class="kicker">LET'S CONNECT</div><h2>Beyond the <em>code.</em></h2></div><p>My places around the web. Some external profiles were taken from an earlier README—please confirm they still belong to you.</p></div><div class="social-grid">
+ <a class="glass social" href="https://github.com/dion1727" target="_blank" rel="noopener noreferrer"><span>GH</span><b>GitHub</b><i>↗</i></a>
+ <a class="glass social" href="https://www.linkedin.com/in/Dion%20Agung%20Kadang/" target="_blank" rel="noopener noreferrer"><span>IN</span><b>LinkedIn</b><i>↗</i></a>
+ <a class="glass social" href="https://www.kaggle.com/dionagungkadang" target="_blank" rel="noopener noreferrer"><span>KG</span><b>Kaggle</b><i>↗</i></a>
+ <a class="glass social" href="https://www.instagram.com/dionmrfs_d/" target="_blank" rel="noopener noreferrer"><span>IG</span><b>Instagram</b><i>↗</i></a>
+ <a class="glass social" href="https://www.youtube.com/@daizodn9742" target="_blank" rel="noopener noreferrer"><span>YT</span><b>YouTube</b><i>↗</i></a>
+ <a class="glass social" href="https://discord.gg/diondn_" target="_blank" rel="noopener noreferrer"><span>DC</span><b>Discord</b><i>↗</i></a>
+ <a class="glass social" href="mailto:dion1727agung@gmail.com"><span>@</span><b>Email</b><i>↗</i></a>
+ </div></section>
+</main>
+<footer><span>© <span id="year">2026</span> Dion Agung Kadang</span><span>Designed in glass. Built with code.</span><a href="#top">Back to top ↑</a></footer>
+</div><script src="game.js" defer></script><script src="radar.js" defer></script><script src="site.js" defer></script>
+</body></html>
