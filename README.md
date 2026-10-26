@@ -27,7 +27,7 @@ I study Informatics and build useful web applications with **Python, JavaScript,
 <div align="center">
 <a href="https://dion1727.github.io/?game=quest#arcade"><img src="assets/arcade-preview-animated.gif" alt="Animated arcade preview — click to play" width="100%" /></a>
 
-[**▶ PLAY THE GAMES**](https://dion1727.github.io/?game=quest#arcade) &nbsp; · &nbsp; [**View contributions**](https://dion1727.github.io/#contributions)
+[**PLAY THE GAMES**](https://dion1727.github.io/?game=quest#arcade) &nbsp; · &nbsp; [**View contributions**](https://dion1727.github.io/#contributions)
 </div>
 
 ## GitHub activity
