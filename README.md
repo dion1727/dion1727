@@ -45,9 +45,18 @@ I study Informatics and build useful web applications with **Python, JavaScript,
 
 <img src="assets/social-glass.png" alt="Social profiles" width="100%" />
 
-<table>
-<tr><td align="center"><a href="https://github.com/dion1727">GitHub</a></td><td align="center"><a href="https://www.linkedin.com/in/Dion%20Agung%20Kadang/">LinkedIn</a></td><td align="center"><a href="https://www.kaggle.com/dionagungkadang">Kaggle</a></td><td align="center"><a href="https://www.instagram.com/dionmrfs_d/">Instagram</a></td></tr>
-<tr><td align="center"><a href="https://www.youtube.com/@daizodn9742">YouTube</a></td><td align="center"><a href="https://discord.gg/diondn_">Discord</a></td><td align="center"><a href="mailto:dion1727agung@gmail.com">Email</a></td><td align="center"><a href="https://github.com/dion1727?tab=repositories">Repositories</a></td></tr>
-</table>
+<div align="center">
+
+<a href="https://github.com/dion1727"><img src="assets/link-github.png" width="174" alt="GitHub" /></a>
+<a href="https://www.linkedin.com/in/Dion%20Agung%20Kadang/"><img src="assets/link-linkedin.png" width="174" alt="LinkedIn" /></a>
+<a href="https://www.kaggle.com/dionagungkadang"><img src="assets/link-kaggle.png" width="174" alt="Kaggle" /></a>
+<a href="https://www.instagram.com/dionmrfs_d/"><img src="assets/link-instagram.png" width="174" alt="Instagram" /></a>
+
+<a href="https://www.youtube.com/@daizodn9742"><img src="assets/link-youtube.png" width="174" alt="YouTube" /></a>
+<a href="https://discord.gg/diondn_"><img src="assets/link-discord.png" width="174" alt="Discord" /></a>
+<a href="mailto:dion1727agung@gmail.com"><img src="assets/link-email.png" width="174" alt="Email" /></a>
+<a href="https://github.com/dion1727?tab=repositories"><img src="assets/link-repositories.png" width="174" alt="Repositories" /></a>
+
+</div>
 
 <p align="center"><sub>Code. Build. Play. Repeat. · <a href="https://github.com/dion1727">@dion1727</a></sub></p>
