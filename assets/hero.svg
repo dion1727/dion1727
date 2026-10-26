@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="366" viewBox="0 0 1200 366" role="img" aria-labelledby="title desc">
+<title id="title">Dion Agung Kadang — developer after hours</title><desc id="desc">Animated amber typographic intro on a warm black background, with moving circles and a terminal prompt.</desc>
+<defs>
+<linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d1916"/><stop offset=".55" stop-color="#171717"/><stop offset="1" stop-color="#32261c"/></linearGradient>
+<linearGradient id="sun" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#ffcb79"/><stop offset="1" stop-color="#f5754b"/></linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ffcc7c"/><stop offset="1" stop-color="#ff7a57"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="9"/></filter>
+<clipPath id="rightHalf"><rect x="760" y="0" width="440" height="366"/></clipPath>
+</defs>
+<style>
+.txt{font-family:Arial,Helvetica,sans-serif}.mono{font-family:Consolas,'Courier New',monospace}.orbit{animation:rot 24s linear infinite;transform-origin:978px 181px}.orb2{animation:rot 17s linear infinite reverse;transform-origin:978px 181px}.blink{animation:blink 1.1s step-end infinite}.float{animation:float 4s ease-in-out infinite}.scan{animation:slide 9s ease-in-out infinite alternate}.blip{animation:blink 2s infinite}.marquee{animation:march 20s linear infinite}@keyframes rot{to{transform:rotate(360deg)}}@keyframes blink{50%{opacity:.16}}@keyframes float{50%{transform:translateY(-7px)}}@keyframes slide{to{transform:translateX(85px)}}@keyframes march{to{transform:translateX(-245px)}}
+</style>
+<rect width="1200" height="366" rx="20" fill="url(#base)"/><rect x="1" y="1" width="1198" height="364" rx="19" fill="none" stroke="#6e5740" stroke-width="2"/>
+<path d="M0 68H1200M0 316H1200" stroke="#66513c" opacity=".5"/>
+<rect x="35" y="27" width="117" height="24" rx="12" fill="#ffad6020" stroke="#e2a261"/><circle cx="49" cy="39" r="4" fill="#ffbd77" class="blip"/><text x="60" y="43" font-size="11" class="mono" fill="#ffe3b7">ONLINE / 2026</text>
+<text x="34" y="107" class="mono" font-size="17" fill="#d7bc99" letter-spacing="3">DEVELOPER PROFILE  /  INDONESIA</text>
+<text x="29" y="188" class="txt" font-size="80" font-weight="900" letter-spacing="-3" fill="#fff4dc">DION</text>
+<text x="29" y="250" class="txt" font-size="53" font-weight="900" letter-spacing="-2.2" fill="url(#fade)">AGUNG KADANG.</text>
+<text x="35" y="292" class="mono" font-size="17" fill="#dfc2a0">building useful things / breaking things / fixing them.</text>
+<text x="36" y="342" class="mono" font-size="14" letter-spacing="2" fill="#ffb36f">$ git commit -m "keep building"</text><rect x="407" y="328" width="9" height="17" fill="#ffb36f" class="blink"/>
+<g clip-path="url(#rightHalf)">
+<circle cx="978" cy="181" r="144" fill="none" stroke="#b97e52" stroke-opacity=".32" stroke-width="2"/>
+<circle cx="978" cy="181" r="113" fill="none" stroke="#ebad70" stroke-opacity=".3" stroke-dasharray="5 13" stroke-width="3" class="orbit"/>
+<circle cx="978" cy="181" r="85" fill="url(#sun)" opacity=".13" filter="url(#glow)"/>
+<circle cx="978" cy="181" r="79" fill="url(#sun)"/>
+<g fill="#2d1d16" opacity=".46"><rect x="897" y="186" width="166" height="8"/><rect x="897" y="203" width="166" height="8"/><rect x="897" y="220" width="166" height="8"/><rect x="897" y="237" width="166" height="8"/></g>
+<g class="orbit"><circle cx="978" cy="35" r="7" fill="#ffe3a2"/><circle cx="978" cy="327" r="5" fill="#ff9572"/></g>
+<g class="orb2"><circle cx="978" cy="68" r="5" fill="#f4e6c6"/></g>
+<path d="M794 289H1133M794 301H1133" stroke="#f7ad6d" opacity=".45" class="scan"/>
+<g class="float"><rect x="902" y="156" width="154" height="50" rx="8" fill="#211c1a" stroke="#f7d18a"/><text x="918" y="178" class="mono" font-size="12" fill="#fbd49a">function build()</text><text x="918" y="193" class="mono" font-size="11" fill="#e8c9a5">  return ideas;</text></g>
+</g>
+<g opacity=".5" class="marquee"><text x="600" y="339" class="mono" font-size="11" fill="#b98f6c" letter-spacing="4">PYTHON  •  JAVASCRIPT  •  LARAVEL  •  PHP  •  MYSQL  •</text></g>
+</svg>
